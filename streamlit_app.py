@@ -52,4 +52,4 @@ final_table = merged_table[columns_to_keep]
 # updating column names
 final_table.columns = ["name_x", "SID", "identity"]
 new_file_name = "event_user_with_SID.csv"
-final_table.to_csv(new_file_name)
+download = st.download_button("Download Merged Data", final_table.to_csv(new_file_name))
