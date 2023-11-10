@@ -44,7 +44,8 @@ event_attendees = st.file_uploader("Upload Attendance Data", type="csv")
 event_user = st.file_uploader("Upload Evant Data", type="csv")
 
 if (event_attendees is not None) and (event_user is not None):
-    
+    event_attendees = pd.read_csv(event_attendees)
+    event_user = pd.read_csv(event_user)
     event_user.columns = pd.Series(event_user.columns).str.replace(r"\d_", "", regex=True).replace("_", " ", regex=True)
     
     merged_table = pd.merge(event_user, event_attendees, how="inner", left_on="phone number", right_on="phone number")
