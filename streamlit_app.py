@@ -50,10 +50,10 @@ if (event_attendees is not None) and (event_user is not None):
     col1 = st.multiselect("Columns in attendance Data", event_attendees.columns)
     col2 = st.multiselect("Columns in Evant Data", event_user.columns)
 
-    merged_table = pd.merge(event_user, event_attendees, how="inner", left_on="phone number", right_on="phone number")
+    merged_table = pd.merge(event_user[[col2]], event_attendees[[col1]], how="inner", left_on="phone number", right_on="phone number")
     
     # columns_to_keep = ["name_x", "What is your Cal SID (student ID)?", "identity",]
-    # final_table = merged_table[columns_to_keep]
+    final_table = merged_table[columns_to_keep]
     # updating column names
     # final_table.columns = ["name_x", "SID", "identity"]
     new_file_name = "event_user_with_SID.csv"
