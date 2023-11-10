@@ -47,13 +47,15 @@ if (event_attendees is not None) and (event_user is not None):
     event_attendees = pd.read_csv(event_attendees)
     event_user = pd.read_csv(event_user)
     event_user.columns = pd.Series(event_user.columns).str.replace(r"\d_", "", regex=True).replace("_", " ", regex=True)
-    
+    col1 = st.multiselect("Columns in First Table", event_attendees.columns)
+    col2 = st.multiselect("Columns in First Table", event_attendees.columns)
+
     merged_table = pd.merge(event_user, event_attendees, how="inner", left_on="phone number", right_on="phone number")
     
-    columns_to_keep = ["name_x", "What is your Cal SID (student ID)?", "identity",]
-    final_table = merged_table[columns_to_keep]
+    # columns_to_keep = ["name_x", "What is your Cal SID (student ID)?", "identity",]
+    # final_table = merged_table[columns_to_keep]
     # updating column names
-    final_table.columns = ["name_x", "SID", "identity"]
+    # final_table.columns = ["name_x", "SID", "identity"]
     new_file_name = "event_user_with_SID.csv"
     download = st.download_button("Download Merged Data", final_table.to_csv(new_file_name))
 else:
