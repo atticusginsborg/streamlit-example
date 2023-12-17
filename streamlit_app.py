@@ -4,13 +4,11 @@ import pandas as pd
 import streamlit as st
 
 """
-# Welcome to Streamlit!
+# Berkeley Hillel Data Merging App by Attiucs Ginsborg
 
-Edit `/streamlit_app.py` to customize this app to your heart's desire :heart:.
-If you have any questions, checkout our [documentation](https://docs.streamlit.io) and [community
-forums](https://discuss.streamlit.io).
-
-In the meantime, below is an example of what you can do with just a few lines of code:
+* Start by uploading your data (one event attendance file and one evant file below)
+* Next select all the columns you want to include in the table before the data is merged. Make sure to include phone number as that is the key being merged on
+* Finally choose what columns you want in the downloaded file and then click download for the merged file.
 """
 
 #uploading user data
