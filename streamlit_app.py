@@ -54,14 +54,25 @@ if (event_attendees is not None) and (event_user is not None):
     col1 = st.multiselect("Columns in attendance Data", event_attendees.columns)
     col2 = st.multiselect("Columns in Evant Data", event_user.columns)
     condition_to_continue = ((len(col1) > 1) and ("What is your SID (student ID)?" in col2) and ("phone number" in col1) and ("phone number" in col2) and ("identity" in col2))
-    if condition_to_continue:
-        
+    if "phone number" not in col1:
+        st.warning("Make sure to include the phone number in first table so data can be merged")
+    elif "phone number" not in col2:
+        st.warning("Make sure to include the phone number in second table so data can be merged")
+    elif "What is your SID (student ID)?" not in col2:
+        st.warning("Make sure to include the student ID info")
+    elif if sum(pd.Series(col2).str.contains("identity")) == 0:
+        st.warning("Make sure to include the Jewish identity info")
+    else:
         merged_table = pd.merge(event_user[col2], event_attendees[col1], how="inner", left_on="phone number", right_on="phone number")
         
-        columns_to_keep = ["name", "What is your SID (student ID)?", "identity",]
+        columns_to_keep = st.multiselect("Columns in Merged Data", merged_table.columns)
+        if len(columns_to_keep) < 3:
+            st.warning("You have not selected enough columns")
+        elif "What is your SID (student ID)?" not in columns_to_keep:
+            st.warning("You forgot to include the SID column")
         final_table = merged_table[columns_to_keep]
         # updating column names
-        final_table.columns = ["name", "SID", "Jewish identity"]
+        # final_table.columns = ["name", "SID", "Jewish identity"]
         new_file_name = "event_user_with_SID.csv"
         data_as_csv= final_table.to_csv(index=False).encode("utf-8")
         download = st.download_button(
@@ -70,9 +81,6 @@ if (event_attendees is not None) and (event_user is not None):
             new_file_name,
             "text/csv",
             key=new_file_name,
-        )
-        # download = st.download_button("Download Merged Data", final_table.to_csv(new_file_name))
-    else:
-        st.warning('Please select relevant columns')
+        )    
 else:
     st.warning('Please upload a CSV file to continue.')
