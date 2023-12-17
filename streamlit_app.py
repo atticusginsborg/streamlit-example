@@ -52,7 +52,7 @@ if (event_attendees is not None) and (event_user is not None):
     condition_to_continue = ((len(col1) > 1) and ("What is your SID (student ID)?" in col2) and ("phone number" in col1) and ("phone number" in col2))
     if condition_to_continue:
         
-        merged_table = pd.merge(event_user[[col2]], event_attendees[[col1]], how="inner", left_on="phone number", right_on="phone number")
+        merged_table = pd.merge(event_user[col2], event_attendees[col1], how="inner", left_on="phone number", right_on="phone number")
         
         # columns_to_keep = ["name_x", "What is your Cal SID (student ID)?", "identity",]
         final_table = merged_table[columns_to_keep]
