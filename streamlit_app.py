@@ -33,7 +33,7 @@ if (event_attendees is not None) and (event_user is not None):
         st.warning("Make sure to include the phone number in second table so data can be merged")
     elif "What is your SID (student ID)?" not in col2:
         st.warning("Make sure to include the student ID info")
-    elif sum(pd.Series(col2).str.contains("identity")) == 0:
+    elif sum(pd.Series(col2).str.contains("identity", case=False)) == 0:
         st.warning("Make sure to include the Jewish identity info")
     else:
         merged_table = pd.merge(event_user[col2], event_attendees[col1], how="inner", left_on="phone number", right_on="phone number")
