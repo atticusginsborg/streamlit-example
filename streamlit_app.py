@@ -49,7 +49,7 @@ if (event_attendees is not None) and (event_user is not None):
     event_user.columns = pd.Series(event_user.columns).str.replace(r"\d_", "", regex=True).replace("_", " ", regex=True)
     col1 = st.multiselect("Columns in attendance Data", event_attendees.columns)
     col2 = st.multiselect("Columns in Evant Data", event_user.columns)
-    condition_to_continue = ((len(col1) > 1) and ("What is your Cal SID (student ID)?" in col2))
+    condition_to_continue = ((len(col1) > 1) and ("What is your SID (student ID)?" in col2) and ("phone number" in col1) and ("phone number" in col2))
     if condition_to_continue:
         
         merged_table = pd.merge(event_user[[col2]], event_attendees[[col1]], how="inner", left_on="phone number", right_on="phone number")
