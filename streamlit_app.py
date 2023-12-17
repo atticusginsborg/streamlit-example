@@ -49,14 +49,18 @@ if (event_attendees is not None) and (event_user is not None):
     event_user.columns = pd.Series(event_user.columns).str.replace(r"\d_", "", regex=True).replace("_", " ", regex=True)
     col1 = st.multiselect("Columns in attendance Data", event_attendees.columns)
     col2 = st.multiselect("Columns in Evant Data", event_user.columns)
-
-    merged_table = pd.merge(event_user[[col2]], event_attendees[[col1]], how="inner", left_on="phone number", right_on="phone number")
-    
-    # columns_to_keep = ["name_x", "What is your Cal SID (student ID)?", "identity",]
-    final_table = merged_table[columns_to_keep]
-    # updating column names
-    # final_table.columns = ["name_x", "SID", "identity"]
-    new_file_name = "event_user_with_SID.csv"
-    download = st.download_button("Download Merged Data", final_table.to_csv(new_file_name))
+    condition_to_continue = ((len(col1) > 1) and ("What is your Cal SID (student ID)?" in col2))
+    if condition_to_continue:
+        
+        merged_table = pd.merge(event_user[[col2]], event_attendees[[col1]], how="inner", left_on="phone number", right_on="phone number")
+        
+        # columns_to_keep = ["name_x", "What is your Cal SID (student ID)?", "identity",]
+        final_table = merged_table[columns_to_keep]
+        # updating column names
+        # final_table.columns = ["name_x", "SID", "identity"]
+        new_file_name = "event_user_with_SID.csv"
+        download = st.download_button("Download Merged Data", final_table.to_csv(new_file_name))
+    else:
+        st.warning('Please select relevant columns')
 else:
     st.warning('Please upload a CSV file to continue.')
