@@ -21,11 +21,12 @@ if (event_attendees is not None) and (event_user is not None):
     event_user.columns = pd.Series(event_user.columns).str.replace(r"\d_", "", regex=True).replace("_", " ", regex=True)
 
     #creating identity column
-    event_user["identity"] = event_user.fillna("").iloc[:, 10] + event_user.fillna("").iloc[:, 11]
+    #can add back in but seems like they're including identity directly
+    # event_user["identity"] = event_user.fillna("").iloc[:, 10] + event_user.fillna("").iloc[:, 11]
     
     col1 = st.multiselect("Columns in attendance Data", event_attendees.columns)
     col2 = st.multiselect("Columns in Evant Data", event_user.columns)
-    condition_to_continue = ((len(col1) > 1) and ("What is your SID (student ID)?" in col2) and ("phone number" in col1) and ("phone number" in col2) and ("identity" in col2))
+    # condition_to_continue = ((len(col1) > 1) and ("What is your SID (student ID)?" in col2) and ("phone number" in col1) and ("phone number" in col2) and ("identity" in col2))
     if "phone number" not in col1:
         st.warning("Make sure to include the phone number in first table so data can be merged")
     elif "phone number" not in col2:
