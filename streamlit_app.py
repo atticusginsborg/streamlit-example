@@ -63,7 +63,15 @@ if (event_attendees is not None) and (event_user is not None):
         # updating column names
         final_table.columns = ["name", "SID", "Jewish identity"]
         new_file_name = "event_user_with_SID.csv"
-        download = st.download_button("Download Merged Data", final_table.to_csv(new_file_name))
+        data_as_csv= final_table.to_csv(index=False).encode("utf-8")
+        download = st.download_button(
+            "Download Merged Data as CSV", 
+            data_as_csv, 
+            new_file_name,
+            "text/csv",
+            key=new_file_name,
+        )
+        # download = st.download_button("Download Merged Data", final_table.to_csv(new_file_name))
     else:
         st.warning('Please select relevant columns')
 else:
